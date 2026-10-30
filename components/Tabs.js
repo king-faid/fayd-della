@@ -60,7 +60,7 @@ function Checklist({ data, items, rows, onToggle, catatan }) {
           setBusy('');
         }}
       >
-        <div className="box">{'✓'}</div>
+        <div className="box">{'♥'}</div>
         <div className="txt">
           <div className="lbl">{it.label}</div>
           {it.batas ? <div className="muted">Tepat waktu sebelum {it.batas}</div> : null}

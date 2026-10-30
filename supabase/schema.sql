@@ -157,10 +157,12 @@ end $$;
 
 -- =====================================================================
 -- SETELAH membuat 2 akun di Authentication > Users (Add user, centang
--- Auto Confirm), jalankan ini dengan email masing-masing:
+-- Auto Confirm, password = PIN 6 angka):
+--   faid@sopsayang.app  dan  della@sopsayang.app
+-- jalankan ini:
 --
 -- insert into public.profiles (id, username, nama)
---   select id, 'faid', 'Faid' from auth.users where email = 'EMAIL_FAID';
+--   select id, 'faid', 'Faid' from auth.users where email = 'faid@sopsayang.app';
 -- insert into public.profiles (id, username, nama)
---   select id, 'della', 'Della' from auth.users where email = 'EMAIL_DELLA';
+--   select id, 'della', 'Della' from auth.users where email = 'della@sopsayang.app';
 -- =====================================================================

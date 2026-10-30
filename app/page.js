@@ -132,7 +132,7 @@ export default function Home() {
       <div className="center">
         <div className="card">
           <h3>Akun belum terdaftar</h3>
-          <div className="muted">Email {session.user.email} belum ada di tabel profiles. Jalankan perintah insert profiles di supabase/schema.sql.</div>
+          <div className="muted">Akun {session.user.email} belum ada di tabel profiles. Jalankan perintah insert profiles di supabase/schema.sql.</div>
           <button className="btn ghost block" style={{ marginTop: 14 }} onClick={() => supabase.auth.signOut()}>Keluar</button>
         </div>
       </div>
@@ -166,7 +166,7 @@ export default function Home() {
     );
   };
 
-  const akun = () => setModal(<Akun email={session.user.email} nama={meProfile.nama} tutup={() => setModal(null)} toast={toast} />);
+  const akun = () => setModal(<Akun nama={meProfile.nama} tutup={() => setModal(null)} toast={toast} />);
 
   const props = { data, run, toast, setModal, me: session.user.id };
 
@@ -176,6 +176,7 @@ export default function Home() {
       <header className="top">
         <div className="hdr">
           <div>
+            <small className="hdr-kicker">SOP Sayang {'♥'}</small>
             <h2>Hai, {meProfile ? meProfile.nama : ''}</h2>
             <small>{data ? tglIndo(data.today) : ''}</small>
           </div>
@@ -210,13 +211,13 @@ export default function Home() {
   );
 }
 
-function Akun({ email, nama, tutup, toast }) {
+function Akun({ nama, tutup, toast }) {
   const [pw, setPw] = useState('');
   const [busy, setBusy] = useState(false);
 
   const simpan = async () => {
-    if (pw.length < 6) {
-      toast('Password minimal 6 karakter.');
+    if (!/^\d{6}$/.test(pw)) {
+      toast('PIN baru harus 6 angka.');
       return;
     }
     setBusy(true);
@@ -225,19 +226,26 @@ function Akun({ email, nama, tutup, toast }) {
     if (error) toast(error.message);
     else {
       tutup();
-      toast('Password berhasil diganti.');
+      toast('PIN berhasil diganti.');
     }
   };
 
   return (
     <>
       <h3>Akun {nama}</h3>
-      <p className="muted">{email}</p>
-      <label className="f">Password baru</label>
-      <input className="in" type="password" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="Minimal 6 karakter" />
+      <label className="f">PIN baru (6 angka)</label>
+      <input
+        className="in pin-in"
+        type="password"
+        inputMode="numeric"
+        maxLength={6}
+        value={pw}
+        onChange={(e) => setPw(e.target.value.replace(/\D/g, '').slice(0, 6))}
+        placeholder="••••••"
+      />
       <div className="row" style={{ marginTop: 14 }}>
         <button className="btn ghost" onClick={tutup}>Tutup</button>
-        <button className="btn" style={{ flex: 1 }} disabled={busy} onClick={simpan}>Simpan password</button>
+        <button className="btn" style={{ flex: 1 }} disabled={busy} onClick={simpan}>Simpan PIN</button>
       </div>
       <button className="btn ghost block" style={{ marginTop: 14 }} onClick={() => { tutup(); supabase.auth.signOut(); }}>Keluar</button>
     </>

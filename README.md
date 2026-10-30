@@ -32,14 +32,21 @@ Jam centang dicatat oleh server Supabase, jadi tidak bisa diakali dari jam HP.
 
 1. Buat proyek baru di [supabase.com](https://supabase.com), misalnya `sop-sayang`. Region terdekat: **Southeast Asia (Singapore)**.
 2. Buka **SQL Editor > New query**, tempel isi `supabase/schema.sql`, lalu **Run**.
-3. Buka **Authentication > Users > Add user > Create new user**, buat 2 akun (email + password) untuk Faid dan Della. Centang **Auto Confirm User**.
-4. Kembali ke **SQL Editor**, jalankan dengan email kalian masing-masing:
+3. Login aplikasi = pilih **Faid / Della** + **PIN 6 angka**. Buka **Authentication > Users > Add user > Create new user** dan buat 2 akun (centang **Auto Confirm User**):
+
+   | Untuk | Email (alamat login internal) | Password |
+   | --- | --- | --- |
+   | Faid | `faid@sopsayang.app` | PIN 6 angka Faid |
+   | Della | `della@sopsayang.app` | PIN 6 angka Della |
+
+   Email ini tidak perlu email asli; daftarnya ada di `AKUN` pada `lib/config.js`.
+4. Kembali ke **SQL Editor** dan jalankan:
 
    ```sql
    insert into public.profiles (id, username, nama)
-     select id, 'faid', 'Faid' from auth.users where email = 'EMAIL_FAID';
+     select id, 'faid', 'Faid' from auth.users where email = 'faid@sopsayang.app';
    insert into public.profiles (id, username, nama)
-     select id, 'della', 'Della' from auth.users where email = 'EMAIL_DELLA';
+     select id, 'della', 'Della' from auth.users where email = 'della@sopsayang.app';
    ```
 
 5. Supaya orang lain tidak bisa daftar: **Authentication > Sign In / Providers > Email**, matikan **Allow new users to sign up**.
